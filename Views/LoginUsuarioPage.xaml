@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="APPFinanca.Views.LoginUsuarioPage"
+             Title="Login"
+             BackgroundColor="#000000">
+
+    <ContentPage.Content>
+        <Grid Padding="20"
+              VerticalOptions="Center"
+              HorizontalOptions="CenterAndExpand"
+              RowSpacing="20"
+              ColumnDefinitions="Auto, *">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Label 
+                Text="Bem-vindo ao Minhas Finanças"
+                Grid.Row="0"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                FontSize="24"
+                FontAttributes="Bold"
+                TextColor="#FFFFFF" />
+
+
+            <Entry 
+                Grid.Row="1"
+                Grid.Column="1"
+                Placeholder="Digite seu usuário"
+                x:Name="txtUsuario"
+                TextColor="#FFFFFF"
+                PlaceholderColor="#888888"
+                BackgroundColor="#1A1A1A"
+                HeightRequest="40" />
+
+            <Entry 
+                Grid.Row="2"
+                Grid.Column="1"
+                Placeholder="Digite sua senha"
+                x:Name="txtSenha"
+                IsPassword="True"
+                TextColor="#FFFFFF"
+                PlaceholderColor="#888888"
+                BackgroundColor="#1A1A1A"
+                HeightRequest="40" />
+
+            <Button 
+                Text="Entrar"
+                Grid.Row="3"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Clicked="btnLogin_Clicked"
+                BackgroundColor="#4CAF50"
+                TextColor="#FFFFFF"
+                CornerRadius="10"
+                HeightRequest="50" />
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

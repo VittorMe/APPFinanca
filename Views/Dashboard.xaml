@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converters="clr-namespace:APPFinanca.Libraries.Converters"
+             x:Class="APPFinanca.Views.Dashboard"
+             BackgroundColor="#2e2e2e"
+             Title="Dashboard">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:MonthToStringConverter x:Key="MonthToStringConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="20">
+
+            <!-- Filtro por Mês -->
+            <StackLayout Orientation="Horizontal" Spacing="10" HorizontalOptions="FillAndExpand">
+               
+                <Picker x:Name="MonthPicker" 
+                        SelectedIndexChanged="OnMonthSelected" 
+                        Title="Escolha o mês"
+                        ItemsSource="{Binding MonthNames}"
+                        ItemDisplayBinding="{Binding ., Converter={StaticResource MonthToStringConverter}}"  
+                        BackgroundColor="#3a3a3a" 
+                        TextColor="White" />
+            </StackLayout>
+
+            <!-- Nome do Usuário -->
+            <Label x:Name="UserNameLabel"
+                   FontSize="24" 
+                   FontAttributes="Bold"
+                   TextColor="White"
+                   HorizontalOptions="Center" />
+
+            <!-- Resumo financeiro -->
+            <Grid ColumnDefinitions="*,*">
+                <Label Text="Total Gasto:" 
+                       VerticalOptions="Center" 
+                       HorizontalOptions="End" 
+                       TextColor="White" />
+                <Label x:Name="TotalSpentLabel" 
+                       FontSize="18"
+                       TextColor="White"
+                       VerticalOptions="Center" 
+                       HorizontalOptions="Start" />
+            </Grid>
+
+            <Grid ColumnDefinitions="*,*">
+                <Label Text="Total Recebido:" 
+                       VerticalOptions="Center" 
+                       HorizontalOptions="End" 
+                       TextColor="White" />
+                <Label x:Name="TotalReceivedLabel" 
+                       FontSize="18"
+                       TextColor="White"
+                       VerticalOptions="Center" 
+                       HorizontalOptions="Start" />
+            </Grid>
+
+            <!-- Lista de Transações -->
+            <CollectionView x:Name="TransactionsCollectionView"
+                SelectionMode="None">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame BorderColor="Gray" Padding="10" Margin="5" BackgroundColor="#3a3a3a">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+
+                                <!-- Exibir o nome do grupo -->
+                                <Label Grid.Row="0" 
+                           Text="{Binding Group}" 
+                           FontAttributes="Bold" 
+                           FontSize="18" 
+                           TextColor="White"/>
+
+                                <!-- Exibir o valor total do grupo -->
+                                <Label Grid.Row="1" 
+                           Text="{Binding TotalValue, StringFormat='R$ {0:N2}'}" 
+                           FontSize="16" 
+                           TextColor="White" 
+                           HorizontalOptions="End" />
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
