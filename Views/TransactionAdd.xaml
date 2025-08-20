@@ -2,92 +2,169 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="APPFinanca.Views.TransactionAdd"
-             Title="TransactionAdd">
+             Title="Nova Transação">
 
+    <ScrollView>
+        <VerticalStackLayout Spacing="15" Padding="20">
 
-    <VerticalStackLayout Spacing="10">
+            <!-- Header -->
+            <Border
+                Margin="0,0,0,10"
+                Padding="20"
+                BackgroundColor="Black"
+                Stroke="Transparent"
+                StrokeShape="RoundRectangle 30">
 
-        <Border
-            Margin="15"
-            Padding="15"
-            BackgroundColor="Black"
-            Stroke="Transparent"
-            StrokeShape="RoundRectangle 30">
+                <Grid ColumnDefinitions="*, 30" RowDefinitions="Auto">
+                    <Label
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        HorizontalOptions="Center"
+                        Text="Nova Transação"
+                        TextColor="White"
+                        FontSize="18"
+                        FontAttributes="Bold"
+                        VerticalOptions="Center" />
+                    <Image 
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        HorizontalOptions="Center"
+                        Source="close.svg"
+                        WidthRequest="20"
+                        HeightRequest="20">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="TapGestureRecognizerTapped_ToClose" />
+                        </Image.GestureRecognizers>
+                    </Image>
+                </Grid>
+            </Border>
 
-            <Grid ColumnDefinitions="*, 30" RowDefinitions="Auto">
-                <Label
-                    Grid.Row="0"
-                    Grid.Column="0"
-                    HorizontalOptions="Center"
-                    Text="Novo"
-                    TextColor="White"
-                    VerticalOptions="Center" />
-                <Image 
-                    Grid.Row="0"
-                    Grid.Column="1"
-                    HorizontalOptions="Center"
-                    Source="close.png"
-                    WidthRequest="17">
-                    <Image.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="TapGestureRecognizerTapped_ToClose" />
-                    </Image.GestureRecognizers>
-                </Image>
-            </Grid>
-        </Border>
+            <!-- Error Label -->
+            <Label
+                x:Name="LabelError"
+                IsVisible="False"
+                Style="{StaticResource ErrorLabelStyle}" />
 
-        <Label
-            x:Name="LabelError"
-            Margin="30,0"
-            IsVisible="False"
-            TextColor="{AppThemeBinding Light=Red,
-                                        Dark='#F37474'}" />
-        <Grid Margin="30,0" ColumnDefinitions="*,*">
-            <RadioButton
-                x:Name="RadioIncome"
-                Content=" Receita"
-                IsChecked="True" />
-            <RadioButton
-                x:Name="RadioExpense"
-                Grid.Column="1"
-                Content=" Despesa"
-                HorizontalOptions="End" />
-        </Grid>
-        <Entry
-            x:Name="EntryName"
-            Margin="15,0"
-            Placeholder="Nome" />
+            <!-- Transaction Type -->
+            <Border Style="{StaticResource TransactionCardStyle}">
+                <VerticalStackLayout Spacing="15">
+                    <Label
+                        Text="Tipo de Transação"
+                        Style="{StaticResource TransactionHeaderStyle}" />
+                    
+                    <Grid ColumnDefinitions="*,*" RowDefinitions="Auto">
+                        <RadioButton
+                            x:Name="RadioIncome"
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Content=" Receita"
+                            IsChecked="True" />
+                        <RadioButton
+                            x:Name="RadioExpense"
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            Content=" Despesa"
+                            HorizontalOptions="End" />
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
 
-        <Grid  ColumnDefinitions="*,*"  RowDefinitions="Auto">
-            <DatePicker x:Name="DatePickerDate" Margin="{OnPlatform Default='15,0', MacCatalyst='15, 15, 15, 0'}" />
+            <!-- Basic Information -->
+            <Border Style="{StaticResource TransactionCardStyle}">
+                <VerticalStackLayout Spacing="15">
+                    <Label
+                        Text="Informações Básicas"
+                        Style="{StaticResource TransactionHeaderStyle}" />
+                    
+                    <Entry
+                        x:Name="EntryName"
+                        Placeholder="Nome da transação" />
 
-            <Picker 
-                Grid.Row="3"
-                Grid.Column="2"
-                x:Name="pickerTipoPagamento"
-                Margin="15,0"
-                HeightRequest="40" />
-        </Grid>
+                    <Entry
+                        x:Name="EntryLocation"
+                        Placeholder="Local/Estabelecimento (opcional)" />
 
-        <Picker 
-            Grid.Row="3"   
-            Grid.Column="2"      
-            x:Name="pickerTipoGrupo"
-            Margin="15,0"
-            HeightRequest="40" />
+                    <Editor
+                        x:Name="EditorDescription"
+                        Placeholder="Descrição/Observações (opcional)"
+                        AutoSize="TextChanges" />
+                </VerticalStackLayout>
+            </Border>
 
-        <Entry
-            x:Name="EntryValue"
-            Margin="15,0"
-            Keyboard="Numeric"
-            Placeholder="0,00"
-            TextChanged="OnEntryValueTextChanged"
-            />
+            <!-- Date and Payment -->
+            <Border Style="{StaticResource TransactionCardStyle}">
+                <VerticalStackLayout Spacing="15">
+                    <Label
+                        Text="Data e Pagamento"
+                        Style="{StaticResource TransactionHeaderStyle}" />
+                    
+                    <DatePicker 
+                        x:Name="DatePickerDate"
+                        Format="dd/MM/yyyy" />
 
-        <Button
-            Margin="15,0"
-            Clicked="OnButtonClicked_Save"
-            HorizontalOptions="Center"
-            BackgroundColor="DarkGray"
-            Text="Salvar" />
-    </VerticalStackLayout>
+                    <Picker 
+                        x:Name="pickerTipoPagamento"
+                        Title="Tipo de Pagamento" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Category and Value -->
+            <Border Style="{StaticResource TransactionCardStyle}">
+                <VerticalStackLayout Spacing="15">
+                    <Label
+                        Text="Categoria e Valor"
+                        Style="{StaticResource TransactionHeaderStyle}" />
+                    
+                    <Picker 
+                        x:Name="pickerTipoGrupo"
+                        Title="Categoria" />
+
+                    <Entry
+                        x:Name="EntryValue"
+                        Keyboard="Numeric"
+                        Placeholder="R$ 0,00"
+                        FontSize="18"
+                        FontAttributes="Bold"
+                        TextChanged="OnEntryValueTextChanged" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Recurrence -->
+            <Border Style="{StaticResource TransactionCardStyle}">
+                <VerticalStackLayout Spacing="15">
+                    <Label
+                        Text="Recorrência"
+                        Style="{StaticResource TransactionHeaderStyle}" />
+                    
+                    <Grid ColumnDefinitions="*, Auto" RowDefinitions="Auto">
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Text="Transação Recorrente"
+                            VerticalOptions="Center" />
+                        <Switch
+                            x:Name="SwitchRecurring"
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            IsToggled="False"
+                            Toggled="OnSwitchRecurringToggled" />
+                    </Grid>
+                    
+                    <Picker 
+                        x:Name="PickerRecurrenceType"
+                        Title="Tipo de Recorrência"
+                        IsVisible="False" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Save Button -->
+            <Button
+                Margin="0,20,0,0"
+                Clicked="OnButtonClicked_Save"
+                HorizontalOptions="Fill"
+                Text="Salvar Transação"
+                Style="{StaticResource PrimaryButtonStyle}" />
+
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

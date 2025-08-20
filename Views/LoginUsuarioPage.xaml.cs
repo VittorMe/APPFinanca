@@ -28,8 +28,8 @@ public partial class LoginUsuarioPage : ContentPage
 
         if (user == null)
         {
-            // Exibe um alerta perguntando se o usuário deseja se cadastrar
-            var cadastrar = await DisplayAlert("Usuário não encontrado", "Deseja cadastrar este usuário?", "Sim", "Não");
+            // Exibe um alerta perguntando se o usuï¿½rio deseja se cadastrar
+            var cadastrar = await DisplayAlert("Usuï¿½rio nï¿½o encontrado", "Deseja cadastrar este usuï¿½rio?", "Sim", "Nï¿½o");
 
             if (cadastrar)
             {
@@ -46,7 +46,7 @@ public partial class LoginUsuarioPage : ContentPage
                 try
                 {
                     _repository.AddUser(novoUsuario);
-                    await DisplayAlert("Sucesso", "Usuário cadastrado com sucesso!", "OK");
+                    await DisplayAlert("Sucesso", "Usuï¿½rio cadastrado com sucesso!", "OK");
                 }
                 catch (Exception ex)
                 {
@@ -55,7 +55,7 @@ public partial class LoginUsuarioPage : ContentPage
             }
             else
             {
-                await DisplayAlert("Cancelado", "Cadastro de usuário foi cancelado.", "OK");
+                await DisplayAlert("Cancelado", "Cadastro de usuï¿½rio foi cancelado.", "OK");
             }
         }
         else
